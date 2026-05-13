@@ -1,6 +1,7 @@
 package pageobjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,7 @@ import java.time.Duration;
 public class LoginPage {
 
     private static final String PAGE_URL = "https://www.ketkereken.hu/fiokom/";
+    private static final Duration TIMEOUT = Duration.ofSeconds(10);
 
     private final WebDriver driver;
     private final WebDriverWait wait;
@@ -28,7 +30,7 @@ public class LoginPage {
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, TIMEOUT);
         PageFactory.initElements(driver, this);
     }
 
@@ -61,5 +63,10 @@ public class LoginPage {
 
     public void logout() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.logout"))).click();
+    }
+    
+    public boolean isSessionCookieValid(String cookieName, String wpUsername) {
+        Cookie cookie = driver.manage().getCookieNamed(cookieName);
+        return cookie != null && cookie.getValue().startsWith(wpUsername + "%7C");
     }
 }

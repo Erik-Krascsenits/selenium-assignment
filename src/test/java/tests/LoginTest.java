@@ -20,6 +20,7 @@ public class LoginTest extends BaseTest {
         String username = env.get("KETKEREKEN_USERNAME");
         String password = env.get("KETKEREKEN_PASSWORD");
         String displayName = env.get("KETKEREKEN_DISPLAY_NAME");
+        String cookieName = env.get("KETKEREKEN_COOKIE_NAME");
         boolean headless = Boolean.parseBoolean(env.getOrDefault("HEADLESS", "true"));
 
         driver = DriverFactory.createDriver(browser, headless);
@@ -30,6 +31,7 @@ public class LoginTest extends BaseTest {
 
         loginPage.login(username, password);
         assertTrue(loginPage.isDisplayNameVisible(displayName), "Display name '" + displayName + "' should be visible after login on " + browser);
+        assertTrue(loginPage.isSessionCookieValid(cookieName, displayName), "Session cookie '" + cookieName + "' should be present and belong to " + displayName + " on " + browser);
 
         loginPage.logout();
         assertTrue(loginPage.isLoginFormVisible(), "Login form should be visible again after logout on " + browser);
