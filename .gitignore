@@ -37,6 +37,9 @@ out/
 *.tmp
 *~
 
+# Environment
+.env
+
 # Selenium / WebDriver artifacts
 selenium-server-*.jar
 chromedriver*

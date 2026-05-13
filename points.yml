@@ -53,7 +53,7 @@ quality:
 # ----------------------------------------------------------
 basic:
   login_form:                # 3 pts | once
-    done: false
+    done: true
     description: "Fill a simple form and submit it (e.g. login with username and password)"
 
   form_with_user:            # 3 pts | once
@@ -61,15 +61,15 @@ basic:
     description: "Submit a form that requires a registered/logged-in user"
 
   logout:                    # 2 pts | once
-    done: false
+    done: true
     description: "Log out from the application and verify it"
 
   fill_input:                # 1 pt each | repeatable | max 10
-    count: 0
+    count: 1
     description: "Fill an input field (text, radio, checkbox, date, etc.) — each different type counts as one"
 
   send_form:                 # 1 pt each | repeatable | max 10
-    count: 0
+    count: 1
     description: "Submit a form (each distinct form counts as one)"
 
   static_page_test:          # 2 pts | once
