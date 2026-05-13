@@ -8,7 +8,7 @@
 # ============================================================
 
 student:
-  website_under_test: ""
+  website_under_test: "ketkereken.hu"
     
     
 # ----------------------------------------------------------
@@ -33,7 +33,7 @@ ai_usage:
 # ----------------------------------------------------------
 quality:
   gitignore:                 # required for grade 2+
-    done: false
+    done: true
     description: "Unnecessary files are ignored (.gitignore covers build output, IDE files, etc.)"
 
   structured_code:           # required for grade 3+
