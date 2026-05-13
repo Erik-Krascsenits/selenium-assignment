@@ -9,7 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.time.Duration;
+import utils.FileDownloader;
 
 public class LoginPage {
 
@@ -55,16 +58,29 @@ public class LoginPage {
         )).isDisplayed();
     }
 
+    public boolean isLoginErrorVisible() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("ul.woocommerce-error li")
+        )).isDisplayed();
+    }
+
     public boolean isDisplayNameVisible(String displayName) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//p[@class='name' and normalize-space()='" + displayName + "']")
         )).isDisplayed();
     }
 
+    public void downloadAvatar(Path destination) throws IOException {
+        WebElement avatar = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("img.avatar")
+        ));
+        FileDownloader.download(avatar.getAttribute("src"), destination);
+    }
+
     public void logout() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.logout"))).click();
     }
-    
+
     public boolean isSessionCookieValid(String cookieName, String wpUsername) {
         Cookie cookie = driver.manage().getCookieNamed(cookieName);
         return cookie != null && cookie.getValue().startsWith(wpUsername + "%7C");

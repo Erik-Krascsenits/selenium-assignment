@@ -106,7 +106,7 @@ basic:
     description: "Project has at least 6 Java classes (cumulative with above)"
 
   at_least_8_classes:        # 3 pts | once
-    done: false
+    done: true
     description: "Project has at least 8 Java classes (cumulative with above)"
 
   explicit_wait:             # 3 pts | once
@@ -136,7 +136,7 @@ basic:
 # ----------------------------------------------------------
 advanced:
   webdriver_config:          # 4 pts | once
-    done: false
+    done: true
     description: "Configure WebDriver with custom options (e.g. ChromeOptions, window size, user agent)"
     link: "https://www.selenium.dev/documentation/webdriver/drivers/options/"
 
@@ -175,11 +175,11 @@ advanced:
     description: "Verify an e-mail was sent (e.g. registration activation link, password reset)"
 
   random_data:               # 8 pts | once
-    done: false
+    done: true
     description: "Generate random test data (e.g. random username, email) and use it in a test"
 
   download_files:            # 12 pts | once
-    done: false
+    done: true
     description: "Download one or more files to a folder and verify they were saved"
 
   config_file:               # 6 pts | once

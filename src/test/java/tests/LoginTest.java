@@ -7,7 +7,9 @@ import utils.BrowserType;
 import utils.DriverFactory;
 import utils.EnvReader;
 
+import java.io.IOException;
 import java.nio.file.Path;
+import utils.FileDownloader;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,7 +17,7 @@ public class LoginTest extends BaseTest {
 
     @ParameterizedTest(name = "Login and logout on {0}")
     @EnumSource(BrowserType.class)
-    void loginAndLogout(BrowserType browser) {
+    void loginAndLogout(BrowserType browser) throws IOException {
         EnvReader env = EnvReader.load(Path.of(".env"));
         String username = env.get("KETKEREKEN_USERNAME");
         String password = env.get("KETKEREKEN_PASSWORD");
@@ -32,6 +34,10 @@ public class LoginTest extends BaseTest {
         loginPage.login(username, password);
         assertTrue(loginPage.isDisplayNameVisible(displayName), "Display name '" + displayName + "' should be visible after login on " + browser);
         assertTrue(loginPage.isSessionCookieValid(cookieName, displayName), "Session cookie '" + cookieName + "' should be present and belong to " + displayName + " on " + browser);
+
+        Path avatarFile = Path.of("build", "reports", "tests", "test", "avatar_" + browser + ".png");
+        loginPage.downloadAvatar(avatarFile);
+        assertTrue(FileDownloader.isNonEmpty(avatarFile), "Avatar file should be downloaded and non-empty on " + browser);
 
         loginPage.logout();
         assertTrue(loginPage.isLoginFormVisible(), "Login form should be visible again after logout on " + browser);
