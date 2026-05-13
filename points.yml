@@ -98,11 +98,11 @@ basic:
     description: "Select or verify a radio button"
 
   at_least_4_classes:        # 3 pts | once
-    done: false
+    done: true
     description: "Project has at least 4 Java classes"
 
   at_least_6_classes:        # 3 pts | once
-    done: false
+    done: true
     description: "Project has at least 6 Java classes (cumulative with above)"
 
   at_least_8_classes:        # 3 pts | once
@@ -192,7 +192,7 @@ advanced:
     link: "https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/JavascriptExecutor.html"
     
   screenshot_on_failure:     # 6 pts | once
-    done: false
+    done: true
     description: "Automatically take a screenshot when a test fails (e.g. using a TestNG ITestListener)"
     link: "https://www.browserstack.com/guide/take-screenshots-in-selenium"
     

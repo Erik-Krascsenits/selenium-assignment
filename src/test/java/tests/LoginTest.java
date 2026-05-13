@@ -1,9 +1,7 @@
 package tests;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.openqa.selenium.WebDriver;
 import pageobjects.LoginPage;
 import utils.BrowserType;
 import utils.DriverFactory;
@@ -13,16 +11,7 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LoginTest {
-
-    private WebDriver driver;
-
-    @AfterEach
-    void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+public class LoginTest extends BaseTest {
 
     @ParameterizedTest(name = "Login and logout on {0}")
     @EnumSource(BrowserType.class)
