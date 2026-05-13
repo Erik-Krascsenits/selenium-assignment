@@ -40,4 +40,8 @@ public final class EnvReader {
     public String get(String key) {
         return values.get(key);
     }
+
+    public String getOrDefault(String key, String defaultValue) {
+        return values.getOrDefault(key, defaultValue);
+    }
 }

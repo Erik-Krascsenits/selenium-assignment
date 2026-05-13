@@ -183,7 +183,7 @@ advanced:
     description: "Download one or more files to a folder and verify they were saved"
 
   config_file:               # 6 pts | once
-    done: false
+    done: true
     description: "Store test settings in an external file (e.g. .properties, .yml, or .env) and read them at runtime — things like base URL, username, password, browser type. No hardcoded values in your test code"
 
   javascript_executor:       # 4 pts | once
@@ -197,12 +197,12 @@ advanced:
     link: "https://www.browserstack.com/guide/take-screenshots-in-selenium"
     
   headless_execution:        # 4 pts | once
-    done: false
+    done: true
     description: "Run tests in headless mode (browser without visible UI)"
     link: "https://www.selenium.dev/documentation/webdriver/browsers/chrome/"
 
   cross_browser_testing:     # 8 pts | once
-    done: false
+    done: true
     description: "Run the same tests on multiple browsers (e.g. Chrome and Firefox) using parameterization"
     link: "https://www.selenium.dev/documentation/webdriver/browsers/"
 

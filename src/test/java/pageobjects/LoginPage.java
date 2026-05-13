@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class LoginPage {
+
     private static final String PAGE_URL = "https://www.ketkereken.hu/fiokom/";
+
     private final WebDriver driver;
     private final WebDriverWait wait;
 
@@ -24,9 +26,6 @@ public class LoginPage {
     @FindBy(name = "login")
     private WebElement loginButton;
 
-    @FindBy(css = "form.woocommerce-form-login")
-    private WebElement loginForm;
-
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -35,44 +34,32 @@ public class LoginPage {
 
     public void open() {
         driver.get(PAGE_URL);
-        wait.until(ExpectedConditions.visibilityOf(loginForm));
-    }
-
-    public boolean isLoginFormVisible() {
-        return loginForm.isDisplayed();
+        wait.until(ExpectedConditions.visibilityOf(usernameInput));
     }
 
     public void login(String username, String password) {
-        wait.until(ExpectedConditions.visibilityOf(usernameInput)).clear();
+        wait.until(ExpectedConditions.elementToBeClickable(usernameInput)).clear();
         usernameInput.sendKeys(username);
-        passwordInput.clear();
+
+        wait.until(ExpectedConditions.elementToBeClickable(passwordInput)).clear();
         passwordInput.sendKeys(password);
-        loginButton.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
+    }
+
+    public boolean isLoginFormVisible() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("label[for='username']")
+        )).isDisplayed();
     }
 
     public boolean isDisplayNameVisible(String displayName) {
-        return wait.until(ExpectedConditions.textToBePresentInElementLocated(
-                By.xpath("//p[@class='name' and normalize-space()=\'" + displayName + "\']"),
-                displayName
-        ));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//p[@class='name' and normalize-space()='" + displayName + "']")
+        )).isDisplayed();
     }
 
     public void logout() {
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a.logout"))).click();
-    }
-
-    public boolean isLoginLinkVisible() {
-        return wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//a[@href='https://ketkereken.hu/fiokom' and normalize-space()='Bejelentkezés/Fiókom']")
-        )).isDisplayed();
-    }
-
-    public boolean isLoggedIn() {
-        return wait.until(driver -> {
-            if (!driver.getCurrentUrl().contains("/fiokom/")) {
-                return true;
-            }
-            return !driver.findElements(By.cssSelector("a[href*='logout'], a.logout, .woocommerce-MyAccount-content, .account")).isEmpty();
-        });
     }
 }

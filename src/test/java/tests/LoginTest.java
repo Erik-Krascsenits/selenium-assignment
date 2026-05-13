@@ -1,30 +1,21 @@
 package tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import pageobjects.LoginPage;
+import utils.BrowserType;
+import utils.DriverFactory;
 import utils.EnvReader;
 
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginTest {
-    private WebDriver driver;
-    private LoginPage loginPage;
-    private EnvReader env;
 
-    @BeforeEach
-    void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        env = EnvReader.load(Path.of(".env"));
-        loginPage = new LoginPage(driver);
-    }
+    private WebDriver driver;
 
     @AfterEach
     void tearDown() {
@@ -33,23 +24,25 @@ public class LoginTest {
         }
     }
 
-    @Test
-    void loginWithEnvCredentials() {
+    @ParameterizedTest(name = "Login and logout on {0}")
+    @EnumSource(BrowserType.class)
+    void loginAndLogout(BrowserType browser) {
+        EnvReader env = EnvReader.load(Path.of(".env"));
         String username = env.get("KETKEREKEN_USERNAME");
         String password = env.get("KETKEREKEN_PASSWORD");
         String displayName = env.get("KETKEREKEN_DISPLAY_NAME");
+        boolean headless = Boolean.parseBoolean(env.getOrDefault("HEADLESS", "true"));
 
-        assertNotNull(username, "KETKEREKEN_USERNAME must be defined in .env");
-        assertNotNull(password, "KETKEREKEN_PASSWORD must be defined in .env");
-        assertNotNull(displayName, "KETKEREKEN_DISPLAY_NAME must be defined in .env");
+        driver = DriverFactory.createDriver(browser, headless);
+        LoginPage loginPage = new LoginPage(driver);
 
         loginPage.open();
-        assertTrue(loginPage.isLoginFormVisible(), "Login form should be visible on the page");
+        assertTrue(loginPage.isLoginFormVisible(), "Login form should be visible before login");
 
         loginPage.login(username, password);
-        assertTrue(loginPage.isDisplayNameVisible(displayName), "The display name should be visible after login");
+        assertTrue(loginPage.isDisplayNameVisible(displayName), "Display name '" + displayName + "' should be visible after login on " + browser);
 
         loginPage.logout();
-        assertTrue(loginPage.isLoginLinkVisible(), "The Bejelentkezés/Fiókom link should appear after logout");
+        assertTrue(loginPage.isLoginFormVisible(), "Login form should be visible again after logout on " + browser);
     }
 }
