@@ -19,7 +19,7 @@ student:
 # This has no effect on your grade.
 # ----------------------------------------------------------
 ai_usage:
-  used: false
+  used: true
   tools: "Github Copilot"           # e.g. "Claude, GitHub Copilot"
   description: ""     # e.g. "Used Claude to generate initial Page Object 
                        #  classes, then modified them manually. Used Copilot 
@@ -81,7 +81,7 @@ basic:
     description: "Define an array of URLs or page data, iterate over them and verify something on each page (e.g. check title or a specific element on 5 different pages using a loop)"
 
   complex_xpath:             # 1 pt each | repeatable | max 10
-    count: 1
+    count: 2
     description: "Use a complex XPath expression (e.g. //div[@class='content']//a[contains(@href,'profile')])"
 
   textarea:                  # 1 pt | once
